@@ -1,4 +1,4 @@
-![Capture d'écran 2024-11-14 234328](https://github.com/user-attachments/assets/67167987-492f-492a-a775-75744006ea76)# Next Word Prediction
+# Next Word Prediction
 
 This repository contains machine learning models and code for predicting the next word in a sequence based on a variety of algorithms and methods, such as TF-IDF, Cosine Similarity, AdaBoost, and more. The project demonstrates how to use different techniques for text prediction tasks.
 
@@ -29,7 +29,15 @@ You can install the dependencies using the following command:
 pip install -r requirements.txt
 ```
 ## additional step for universal model encoder from Tensor Flow :
-make sure when you install it and make a rep in your repository named **universal_model_encoder_tf**
+- in **app.py** uncomment this line
+  ```bash
+   embed = (hub.KerasLayer("https://tfhub.dev/google/universal-sentence-encoder/4"))
+  ```
+- make sure to make a rep in your repository named **universal_model_encoder_tf**
+- navigate to here you find this rep and copy it in **universal_model_encoder_tf**
+```bash
+C:\\Users\\name\\AppData\\Local\\tfhub_modules
+```
 ```bash
 063d866c06683311b44b4992fd46fsfdsfdsf/
 │
@@ -38,9 +46,10 @@ make sure when you install it and make a rep in your repository named **universa
 │   ├── variables.data-00000-of-00001             
 │   └──  variables.index                        
 ```
+- they comment the line to avoide loading the model each time you run the app
+- 
 ### Web interface by flask framework
 
 ![Capture d'écran 2024-11-14 234309](https://github.com/user-attachments/assets/719c358f-5c0e-4264-b71b-7f730827489d)
-
 ![Capture d'écran 2024-11-14 234328](https://github.com/user-attachments/assets/95c01d25-34be-4b67-bb32-c89eb26a04ba)
 
