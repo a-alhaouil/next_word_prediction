@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60vh;
+            background-color: #f5f5f5;
+        }
+        .title{
+            padding-right: 300px;
+
+            font-size: 44px;
+            position: relative;
+        }
+        .input-container {
+            padding-right: 300px;
+            position: relative;
+            width: 100%;
+        }
+
+        .search {
+            text-align: center;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background: url(static/search-icon.png) no-repeat scroll 7px 7px;
+            padding-left:30px;
+            background-size: 20px;
+        }
+        .prediction-text {
+            position: absolute;
+            margin-right: 300px;
+            top: 40px;
+            left: 10px;
+            pointer-events: none;
+            font-weight: bold;
+            color: gray;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        select {
+            margin-right: 300px;
+
+            width: 320px;
+            padding: 10px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+        select:focus {
+            outline: none;
+            border-color: #E6E8DF;
+            box-shadow: 0 0 5px rgba(230, 232, 223, 0.5);
+        }
+        select option {
+            padding: 10px;
+        }
+        .search{
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<section class="search">
+    <h1 class="title">Word Predictor</h1>
+
+    <div class="input-container">
+        <input type="text" id="input-text" class="input-field" placeholder="Type a word or phrase" oninput="predictNextWord()">
+
+        <div id="prediction-text" class="prediction-text"></div>
+    </div>
+    <br>
+    <br>
+    <select id="model-select" onchange="predictNextWord()">
+        <option value="LSTM">LSTM</option>
+        <option value="TF-IDF">TF-IDF Multinomial Naive Bayes</option>
+        <option value="Cosine-Adaboost">Cosine Similarity AdaBoost</option>
+        <option value="LSA">Latent Semantic Analysis (LSA)</option>
+
+    </select>
+</section>
+    <script>
+        async function predictNextWord() {
+            const inputField = document.getElementById('input-text');
+            const predictionText = document.getElementById('prediction-text');
+            const text = inputField.value.trim();
+            const selectedModel = document.getElementById('model-select').value;
+
+            if (text.length === 0) {
+                predictionText.innerText = '';
+                return;
+            }
+
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, model: selectedModel })
+            });
+            const data = await response.json();
+            const nextWord = data.next_word;
+
+            // Display the user's input and the predicted word
+            predictionText.innerHTML = text + ' <span style="font-weight: bold; color: black;">' + nextWord + '</span>';
+        }
+
+        // Align the prediction text with the input field
+        document.getElementById('input-text').addEventListener('input', function() {
+            const inputField = document.getElementById('input-text');
+            const predictionText = document.getElementById('prediction-text');
+            predictionText.style.width = inputField.offsetWidth + 'px';
+            predictionText.style.height = inputField.offsetHeight + 'px';
+            predictionText.style.lineHeight = inputField.offsetHeight + 'px';
+            predictionText.style.fontSize = window.getComputedStyle(inputField).fontSize;
+        });
+    </script>
+</body>
+</html>
