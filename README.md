@@ -53,3 +53,4 @@ C:\\Users\\name\\AppData\\Local\\tfhub_modules
 ![Capture d'écran 2024-11-14 234309](https://github.com/user-attachments/assets/719c358f-5c0e-4264-b71b-7f730827489d)
 ![Capture d'écran 2024-11-14 234328](https://github.com/user-attachments/assets/95c01d25-34be-4b67-bb32-c89eb26a04ba)
 
+**Note that:** the corpus used is directed to concepts of AI 
